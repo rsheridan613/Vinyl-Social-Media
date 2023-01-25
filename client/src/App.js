@@ -8,10 +8,12 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
-import Nav from "./components/Nav";
+import Nav from "./components/Nav/Nav";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
+import Signup from "./components/Register/Register";
+import Login from "./components/Login/Login";
+
 import Dashboard from "./pages/Dashboard";
 import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
@@ -53,8 +55,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
-          <Footer />
         </Router>
       </ThemeProvider>
     </ApolloProvider>
