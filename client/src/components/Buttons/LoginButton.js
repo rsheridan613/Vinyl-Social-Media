@@ -27,7 +27,7 @@ const LoginButton = () => {
 			</Button>
 			<Modal open={open} onClose={handleClose} aria-labelledby="Registration" aria-describedby="Registration">
 				<Box sx={modalStyle}>
-					<Login />
+					<Login isOpen={setOpen} />
 				</Box>
 			</Modal>
 		</>

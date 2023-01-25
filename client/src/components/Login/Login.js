@@ -5,7 +5,7 @@ import { LOGIN } from "../../utils/mutations";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Typography, Box, TextField, Button } from "@mui/material";
 
-const Login = () => {
+const Login = ({ isOpen }) => {
 	const [login, { error }] = useMutation(LOGIN);
 	const [formData, setFormData] = useState({
 		email: "",
@@ -25,6 +25,7 @@ const Login = () => {
 			console.log(data);
 			if (data.login.token) {
 				localStorage.setItem("id_token", data.login.token);
+				isOpen(false);
 				navigate("/dashboard");
 			}
 		} catch (error) {

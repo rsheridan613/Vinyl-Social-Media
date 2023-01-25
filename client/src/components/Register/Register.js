@@ -5,7 +5,7 @@ import { ADD_USER } from "../../utils/mutations";
 import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 
-const Register = () => {
+const Register = ({ isOpen }) => {
 	const [addUser, { error }] = useMutation(ADD_USER);
 
 	const [formData, setFormData] = useState({
@@ -28,6 +28,7 @@ const Register = () => {
 			console.log(data);
 			if (data.addUser.token) {
 				localStorage.setItem("id_token", data.addUser.token);
+				isOpen(false);
 				navigate("/dashboard");
 			}
 		} catch (error) {
