@@ -5,7 +5,7 @@ import { LOGIN } from "../../utils/mutations";
 import Grid from "@mui/material/Unstable_Grid2";
 import { Typography, Box, TextField, Button } from "@mui/material";
 
-const LoginContainer = () => {
+const Login = () => {
 	const [login, { error }] = useMutation(LOGIN);
 	const [formData, setFormData] = useState({
 		email: "",
@@ -32,21 +32,25 @@ const LoginContainer = () => {
 		}
 	};
 	return (
-		<Grid container xs={6}>
-			<TextField name="email" id="login-email" variant="outlined" label="email" sx={{ m: 1, width: "50%" }} onChange={handleInputChange}></TextField>
-			<TextField
-				name="password"
-				id="login-password"
-				variant="outlined"
-				label="password"
-				sx={{ m: 1, width: "50%" }}
-				onChange={handleInputChange}
-			></TextField>
-			<Button color="secondary" onClick={handleLogin}>
-				Submit
-			</Button>
+		<Grid container xs={12} md={8} lg={5} sx={{ m: "auto" }}>
+			<Grid xs={12}>
+				<Typography variant="h1" component="h1" align="center">
+					Login
+				</Typography>
+			</Grid>
+			<Grid xs={12} m="auto">
+				<TextField name="email" id="login-email" variant="outlined" helperText="Email" onChange={handleInputChange} fullWidth />
+			</Grid>
+			<Grid xs={12} m="auto">
+				<TextField name="password" id="login-password" variant="outlined" helperText="Password" onChange={handleInputChange} fullWidth />
+			</Grid>
+			<Grid xs={11} md={8} m="auto">
+				<Button color="secondary" onClick={handleLogin} fullWidth>
+					<Typography variant="button">Submit</Typography>
+				</Button>
+			</Grid>
 		</Grid>
 	);
 };
 
-export default LoginContainer;
+export default Login;

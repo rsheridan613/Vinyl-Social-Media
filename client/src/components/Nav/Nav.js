@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Typography, Box, Container, TextField, Button } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
+import RegisterButton from "../Buttons/RegistrationButton";
+import LoginButton from "../Buttons/LoginButton";
 const Nav = () => {
 	return (
 		<Grid container sx={{ backgroundColor: "primary.main", mt: 1 }}>
@@ -14,14 +16,10 @@ const Nav = () => {
 				<TextField id="navSearch" label="Search" variant="outlined" color="background" />
 			</Grid>
 			<Grid xs={1}>
-				<Button>
-					<Link to="/signup">Signup</Link>
-				</Button>
+				<RegisterButton />
 			</Grid>
 			<Grid xs={1}>
-				<Button>
-					<Link to="/login">Login</Link>
-				</Button>
+				<LoginButton />
 			</Grid>
 		</Grid>
 	);

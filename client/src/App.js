@@ -5,8 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/Nav/Nav";
 import Home from "./pages/Home";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import Signup from "./components/Register/Register";
+import Login from "./components/Login/Login";
 
 import Dashboard from "./pages/Dashboard";
 import "@fontsource/roboto/300.css";
