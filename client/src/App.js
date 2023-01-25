@@ -1,9 +1,15 @@
 // import logo from "./logo.svg";
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Nav from "./components/Nav/Nav";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Signup from "./components/Register/Register";
 import Login from "./components/Login/Login";
@@ -19,42 +25,42 @@ import theme from "./theme";
 
 // Main GraphQL endpoint
 let httpLink = createHttpLink({
-	uri: "/graphql",
+  uri: "/graphql",
 });
 
 const authLink = setContext((_, { headers }) => {
-	const token = localStorage.getItem("id_token");
+  const token = localStorage.getItem("id_token");
 
-	return {
-		headers: {
-			...headers,
-			authorization: token ? `Bearer ${token}` : "",
-		},
-	};
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
 });
 
 const client = new ApolloClient({
-	link: authLink.concat(httpLink),
-	cache: new InMemoryCache(),
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
 });
 
 const App = () => {
-	return (
-		<ApolloProvider client={client}>
-			<ThemeProvider theme={theme}>
-				<CssBaseline />
-				<Router>
-					<Nav />
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="/dashboard" element={<Dashboard />} />
-						<Route path="/signup" element={<Signup />} />
-						<Route path="/login" element={<Login />} />
-					</Routes>
-				</Router>
-			</ThemeProvider>
-		</ApolloProvider>
-	);
+  return (
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </Router>
+      </ThemeProvider>
+    </ApolloProvider>
+  );
 };
 
 export default App;
