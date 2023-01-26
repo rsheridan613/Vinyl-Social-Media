@@ -26,22 +26,19 @@ const NoteForm = () => {
 	};
 	return (
 		<Grid container spacing={2} xs={12}>
-			<Typography variant="h3" component="h3">
-				Add Post
-			</Typography>
-			<TextField
-				id="AddText"
-				label="Text"
-				variant="outlined"
-				name="postText"
-				multiline
-				sx={{ m: 1, width: "50%" }}
-				rows={4}
-				onChange={handleInputChange}
-			></TextField>
-			<Button color="secondary" onClick={handleSubmit}>
-				Post
-			</Button>
+			<Grid xs={12}>
+				<Typography variant="h3" component="h3">
+					Add Post
+				</Typography>
+			</Grid>
+			<Grid xs={12}>
+				<TextField id="AddText" label="Text" variant="outlined" name="postText" multiline sx={{ m: 1 }} rows={3} onChange={handleInputChange} />
+			</Grid>
+			<Grid xs={12}>
+				<Button color="secondary" onClick={handleSubmit} sx={{ float: "right" }}>
+					Post
+				</Button>
+			</Grid>
 		</Grid>
 	);
 };

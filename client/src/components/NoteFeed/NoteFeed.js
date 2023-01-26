@@ -7,15 +7,10 @@ import Grid from "@mui/material/Unstable_Grid2";
 const NoteFeed = () => {
 	const { loading, error, data } = useQuery(QUERY_USER_POSTS);
 
-	if (loading) {
-		console.log("loading..", loading);
-	}
 	if (error) {
 		console.log("error", error);
 	}
-	if (data) {
-		console.log("data", data);
-	}
+
 	const postList = data?.userPosts || [];
 	return (
 		<Grid container>

@@ -1,15 +1,5 @@
 import { gql } from "@apollo/client";
 
-// TODO: queries needed:
-//
-// .post (postID)
-// .posts (by username)
-// .user (by username)
-// .users (all users)
-//
-//
-// TESTING NEEDED 1/24 15:02
-
 export const QUERY_ME = gql`
 	query me {
 		me {
