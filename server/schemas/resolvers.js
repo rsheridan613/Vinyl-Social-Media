@@ -12,13 +12,7 @@ const resolvers = {
 		user: async (parent, { username }) => {
 			return User.findOne({ username }).populate("friends").populate("posts");
 		},
-		userPosts: async (parent, args, context) => {
-			if (context.user) {
-				return Post.find({ postAuthor: context.user.username });
-			} else {
-				throw new AuthenticationError("You need to be logged in!");
-			}
-		},
+
 		posts: async (parent, { username }) => {
 			const params = username ? { postAuthor: username } : {};
 			return Post.find(params).sort({ createdAt: -1 }).populate("comments");
