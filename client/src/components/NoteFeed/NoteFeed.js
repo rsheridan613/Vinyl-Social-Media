@@ -2,6 +2,7 @@ import * as React from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_POSTS } from "../../utils/queries";
 import { Card, CardActions, CardContent, Typography, Box } from "@mui/material";
+import LikeButton from "../Buttons/LikeButton";
 import Grid from "@mui/material/Unstable_Grid2";
 import Auth from "../../utils/auth";
 
