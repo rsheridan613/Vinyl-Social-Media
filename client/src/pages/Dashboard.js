@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Typography, Box, TextareaAutosize, TextField, Button } from "@mui/material";
+import { Typography, Box, TextField, Button } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { ADD_POST } from "../utils/mutations";
-import { QUERY_USER_POSTS } from "../utils/queries";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
+import NoteFeed from "../components/NoteFeed/NoteFeed";
 
 const CreatePost = () => {
 	const [addPost, { error }] = useMutation(ADD_POST);
@@ -30,7 +26,7 @@ const CreatePost = () => {
 		}
 	};
 	return (
-		<Grid constainer spacing={2} xs={12}>
+		<Grid container spacing={2} xs={12}>
 			<Typography variant="h3" component="h3">
 				Add Post
 			</Typography>
@@ -51,50 +47,7 @@ const CreatePost = () => {
 		</Grid>
 	);
 };
-const PostFeed = () => {
-	const { loading, error, data } = useQuery(QUERY_USER_POSTS);
 
-	if (loading) {
-		console.log("loading..", loading);
-	}
-	if (error) {
-		console.log("error", error);
-	}
-	if (data) {
-		console.log("data", data);
-	}
-	const postList = data?.userPosts || [];
-	return (
-		<Grid container>
-			<Typography variant="h3" component="h3">
-				User posts
-			</Typography>
-			<Grid container xs={12}>
-				{loading ? (
-					<div>Loading...</div>
-				) : (
-					postList.map((post) => {
-						return (
-							<Card key={post._id} sx={{ m: 1, p: 3, width: "50%" }}>
-								<CardContent>
-									<Typography variant="h3" component="h3">
-										{post.postText}
-									</Typography>
-								</CardContent>
-								<CardActions>
-									<Grid container xs={12}>
-										<Box xs={6}>~{post.postAuthor}</Box>
-										{/* <Box xs={6}>{post.createdAt}</Box> */}
-									</Grid>
-								</CardActions>
-							</Card>
-						);
-					})
-				)}
-			</Grid>
-		</Grid>
-	);
-};
 const Dashboard = () => {
 	return (
 		<Box elevation={2}>
@@ -103,7 +56,7 @@ const Dashboard = () => {
 			</Typography>
 			<Grid container xs={12}>
 				<CreatePost />
-				<PostFeed />
+				<NoteFeed />
 			</Grid>
 		</Box>
 	);
