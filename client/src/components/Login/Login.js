@@ -3,7 +3,7 @@ import { useMutation } from "@apollo/client";
 import { useNavigate } from "react-router-dom";
 import { LOGIN } from "../../utils/mutations";
 import Grid from "@mui/material/Unstable_Grid2";
-import { Typography, Box, TextField, Button } from "@mui/material";
+import { Typography, TextField, Button } from "@mui/material";
 
 const Login = ({ isOpen }) => {
 	const [login, { error }] = useMutation(LOGIN);
@@ -11,6 +11,9 @@ const Login = ({ isOpen }) => {
 		email: "",
 		password: "",
 	});
+	if (error) {
+		console.log(JSON.stringify(error));
+	}
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
 		setFormData({ ...formData, [name]: value });
@@ -43,7 +46,15 @@ const Login = ({ isOpen }) => {
 				<TextField name="email" id="login-email" variant="outlined" helperText="Email" onChange={handleInputChange} fullWidth />
 			</Grid>
 			<Grid xs={12} m="auto">
-				<TextField name="password" id="login-password" variant="outlined" helperText="Password" onChange={handleInputChange} fullWidth />
+				<TextField
+					type="password"
+					name="password"
+					id="login-password"
+					variant="outlined"
+					helperText="Password"
+					onChange={handleInputChange}
+					fullWidth
+				/>
 			</Grid>
 			<Grid xs={11} md={8} m="auto">
 				<Button color="secondary" onClick={handleLogin} fullWidth>
