@@ -4,6 +4,7 @@ import Grid from "@mui/material/Unstable_Grid2";
 import NoteFeed from "../components/NoteFeed/NoteFeed";
 import NoteForm from "../components/NoteForm/NoteForm";
 import UserFeed from "../components/UserFeed/UserFeed";
+
 const Dashboard = () => {
 	return (
 		<Grid container>
