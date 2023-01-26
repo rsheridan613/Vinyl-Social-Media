@@ -3,18 +3,20 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import { useState } from "react";
-import { useMutation, useLazyQuery } from "@apollo/client";
+import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
 import { ADD_LIKE, REMOVE_LIKE } from "../../utils/mutations";
 import { QUERY_POST } from "../../utils/queries";
 
 const LikeButton = ({ postId }) => {
-  // query posts to find number of likes
+  // query posts to find number of likes after clicks
   const [getLikes, { loading, error, data }] = useLazyQuery(QUERY_POST);
-  const postData = data?.post || [];
-  console.log(postData);
 
   const [addLike, { error2 }] = useMutation(ADD_LIKE);
   const [removeLike, { error3 }] = useMutation(REMOVE_LIKE);
+
+  let postData = data?.post || [];
+
+  console.log(postData);
 
   // use variable to toggle if post was liked
   // by default, post is unliked
@@ -53,7 +55,7 @@ const LikeButton = ({ postId }) => {
   return (
     <div>
       <IconButton aria-label="like" onClick={handleClick}>
-        <Typography>{postData.likes}</Typography>
+        <Typography>{postData.likes || 420}</Typography>
         {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
     </div>
