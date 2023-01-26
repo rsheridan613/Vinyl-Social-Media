@@ -12,7 +12,7 @@ const NoteFeed = () => {
   const { loading, error, data } = useQuery(QUERY_POSTS, {
     variables: { username: user },
   });
-  console.log(data);
+  //   console.log(data);
   if (error) {
     console.log("error", error);
   }
@@ -28,7 +28,7 @@ const NoteFeed = () => {
           <div>Loading...</div>
         ) : (
           postList.map((post) => {
-            console.log(post);
+            // console.log(post);
             return (
               <Card key={post._id} sx={{ m: 1, p: 3, width: "50%" }}>
                 <CardContent>
@@ -40,7 +40,7 @@ const NoteFeed = () => {
                   <Grid container xs={12}>
                     <Box xs={6}>~{post.postAuthor}</Box>
                     {/* <Box xs={6}>{post.createdAt}</Box> */}
-                    <LikeButton />
+                    <LikeButton postId={post._id} />
                   </Grid>
                 </CardActions>
               </Card>
