@@ -13,15 +13,9 @@ const UserFeed = () => {
 			</Grid>
 		);
 	}
-	if (loading) {
-		return (
-			<Grid>
-				<CircularProgress />
-			</Grid>
-		);
-	}
 
 	const userList = data?.users || [];
+
 	return (
 		<Grid container>
 			<Paper elevation={2}>

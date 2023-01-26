@@ -66,16 +66,7 @@ export const QUERY_POSTS = gql`
 		}
 	}
 `;
-export const QUERY_USER_POSTS = gql`
-	query Query {
-		userPosts {
-			_id
-			postText
-			postAuthor
-			createdAt
-		}
-	}
-`;
+
 export const QUERY_USER = gql`
 	query user($username: String!) {
 		user(username: $username) {

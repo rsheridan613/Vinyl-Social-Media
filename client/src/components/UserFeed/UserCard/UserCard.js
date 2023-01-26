@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Typography, CircularProgress, Card, CardContent, CardActions } from "@mui/material";
-import Grid from "@mui/material/Unstable_Grid2";
+import { Typography, Card, CardContent } from "@mui/material";
 import AddFriendButton from "./AddFriendButton";
 
 const UserCard = ({ username, userKey, postNumber }) => {

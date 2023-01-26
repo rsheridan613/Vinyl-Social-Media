@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Typography, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import { useMutation } from "@apollo/client";
 import { ADD_FRIEND } from "../../../utils/mutations";
 import Auth from "../../../utils/auth";
@@ -15,7 +15,8 @@ const AddFriendButton = ({ friendId }) => {
 			const { data } = await addFriend({
 				variables: { userId: userId, friendId: friendId },
 			});
-			console.log(data);
+
+			window.location.reload();
 		} catch (error) {
 			console.log(JSON.stringify(error));
 		}
