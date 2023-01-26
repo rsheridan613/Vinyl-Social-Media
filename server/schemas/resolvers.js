@@ -3,168 +3,139 @@ const { User, Post } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
-  // CODE GOES HERE
-  Query: {
-    users: async () => {
-      return User.find({}).populate("friends").populate("posts");
-    },
+	// CODE GOES HERE
+	Query: {
+		users: async () => {
+			return User.find({}).populate("friends").populate("posts");
+		},
 
-    user: async (parent, { username }) => {
-      return User.findOne({ username }).populate("friends").populate("posts");
-    },
-    userPosts: async (parent, args, context) => {
-      if (context.user) {
-        return Post.find({ postAuthor: context.user.username });
-      } else {
-        throw new AuthenticationError("You need to be logged in!");
-      }
-    },
-    posts: async (parent, { username }) => {
-      const params = username ? { postAuthor: username } : {};
-      return Post.find(params).sort({ createdAt: -1 }).populate("comments");
-    },
+		user: async (parent, { username }) => {
+			return User.findOne({ username }).populate("friends").populate("posts");
+		},
 
-    post: async (parent, { postId }) => {
-      return Post.findOne({ _id: postId }).populate("comments");
-    },
+		posts: async (parent, { username }) => {
+			const params = username ? { postAuthor: username } : {};
+			return Post.find(params).sort({ createdAt: -1 }).populate("comments");
+		},
 
-    me: async (parent, args, context) => {
-      if (context.user) {
-        return User.findOne({ _id: context.user._id })
-          .populate("friends")
-          .populate("posts");
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-  },
-  Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
-      const token = signToken(user);
-      return { token, user };
-    },
+		post: async (parent, { postId }) => {
+			return Post.findOne({ _id: postId }).populate("comments");
+		},
 
-    login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+		me: async (parent, args, context) => {
+			if (context.user) {
+				console.log(context.user);
+				return User.findOne({ _id: context.user._id }).populate("friends").populate("posts");
+			}
+			throw new AuthenticationError("You need to be logged in!");
+		},
+	},
+	Mutation: {
+		addUser: async (parent, { username, email, password }) => {
+			const user = await User.create({ username, email, password });
+			const token = signToken(user);
+			return { token, user };
+		},
 
-      if (!user) {
-        throw new AuthenticationError("Email or password is incorrect");
-      }
+		login: async (parent, { email, password }) => {
+			const user = await User.findOne({ email });
 
-      const correctPw = await user.isCorrectPassword(password);
+			if (!user) {
+				throw new AuthenticationError("Email or password is incorrect");
+			}
 
-      if (!correctPw) {
-        throw new AuthenticationError("Email or password is incorrect");
-      }
+			const correctPw = await user.isCorrectPassword(password);
 
-      const token = signToken(user);
+			if (!correctPw) {
+				throw new AuthenticationError("Email or password is incorrect");
+			}
 
-      return { token, user };
-    },
+			const token = signToken(user);
 
-    addFriend: async (parent, { userId, friendId }, context) => {
-      if (context.user) {
-        let user = await User.findOneAndUpdate(
-          { _id: userId },
-          { $addToSet: { friends: friendId } },
-          { new: true }
-        ).populate("friends");
-        return user;
-      }
+			return { token, user };
+		},
 
-      throw new AuthenticationError("You need to be logged in!");
-    },
+		addFriend: async (parent, { userId, friendId }, context) => {
+			if (context.user) {
+				let user = await User.findOneAndUpdate({ _id: userId }, { $addToSet: { friends: friendId } }, { new: true }).populate("friends");
+				return user;
+			}
 
-    removeFriend: async (parent, { userId, friendId }, context) => {
-      if (context.user) {
-        let user = await User.findOneAndUpdate(
-          { _id: userId },
-          { $pull: { friends: friendId } },
-          { new: true }
-        ).populate("friends");
-        return user;
-      }
-    },
+			throw new AuthenticationError("You need to be logged in!");
+		},
 
-    addPost: async (parent, { postText }, context) => {
-      if (context.user) {
-        const post = await Post.create({
-          postText,
-          postAuthor: context.user.username,
-        });
+		removeFriend: async (parent, { userId, friendId }, context) => {
+			if (context.user) {
+				let user = await User.findOneAndUpdate({ _id: userId }, { $pull: { friends: friendId } }, { new: true }).populate("friends");
+				return user;
+			}
+		},
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { posts: post._id } },
-          { new: true }
-        );
+		addPost: async (parent, { postText }, context) => {
+			if (context.user) {
+				const post = await Post.create({
+					postText,
+					postAuthor: context.user.username,
+				});
 
-        return post;
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
+				await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { posts: post._id } }, { new: true });
 
-    removePost: async (parent, { postId }, context) => {
-      if (context.user) {
-        const post = await Post.findOneAndDelete({
-          _id: postId,
-        });
+				return post;
+			}
+			throw new AuthenticationError("You need to be logged in!");
+		},
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $pull: { posts: post._id } },
-          { new: true }
-        );
+		removePost: async (parent, { postId }, context) => {
+			if (context.user) {
+				const post = await Post.findOneAndDelete({
+					_id: postId,
+				});
 
-        return post;
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
+				await User.findOneAndUpdate({ _id: context.user._id }, { $pull: { posts: post._id } }, { new: true });
 
-    addComment: async (parent, { postText, postId }, context) => {
-      if (context.user) {
-        const post = await Post.create({
-          postText,
-          postAuthor: context.user.username,
-        });
+				return post;
+			}
+			throw new AuthenticationError("You need to be logged in!");
+		},
 
-        await User.findOneAndUpdate(
-          { _id: context.user._id },
-          { $addToSet: { posts: post._id } }
-        );
-        await Post.findByIdAndUpdate(
-          { _id: postId },
-          { $addToSet: { comments: post._id } }
-        );
-        return post;
-      }
-      throw new AuthenticationError("You need to be logged in!");
-    },
-    // add likes functionality
-    addLikes: async (parent, { postId }) => {
-      const likes = await Post.findOneAndUpdate(
-        {
-          _id: postId,
-        },
-        { $inc: { likes: 1 } },
-        { new: true }
-      );
+		addComment: async (parent, { postText, postId }, context) => {
+			if (context.user) {
+				const post = await Post.create({
+					postText,
+					postAuthor: context.user.username,
+				});
 
-      return likes;
-    },
+				await User.findOneAndUpdate({ _id: context.user._id }, { $addToSet: { posts: post._id } });
+				await Post.findByIdAndUpdate({ _id: postId }, { $addToSet: { comments: post._id } });
+				return post;
+			}
+			throw new AuthenticationError("You need to be logged in!");
+		},
+		// add likes functionality
+		addLikes: async (parent, { postId }) => {
+			const likes = await Post.findOneAndUpdate(
+				{
+					_id: postId,
+				},
+				{ $inc: { likes: 1 } },
+				{ new: true }
+			);
 
-    removeLikes: async (parent, { postId }) => {
-      const likes = await Post.findOneAndUpdate(
-        {
-          _id: postId,
-        },
-        { $inc: { likes: -1 } },
-        { new: true }
-      );
+			return likes;
+		},
 
-      return likes;
-    },
-  },
+		removeLikes: async (parent, { postId }) => {
+			const likes = await Post.findOneAndUpdate(
+				{
+					_id: postId,
+				},
+				{ $inc: { likes: -1 } },
+				{ new: true }
+			);
+
+			return likes;
+		},
+	},
 };
 
 module.exports = resolvers;
