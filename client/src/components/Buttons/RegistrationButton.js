@@ -27,7 +27,7 @@ const RegisterButton = () => {
 			</Button>
 			<Modal open={open} onClose={handleClose} aria-labelledby="Registration" aria-describedby="Registration">
 				<Box sx={modalStyle}>
-					<Signup />
+					<Signup isOpen={setOpen} />
 				</Box>
 			</Modal>
 		</>
