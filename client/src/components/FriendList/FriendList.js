@@ -17,7 +17,6 @@ const FriendList = () => {
       <Grid container>
         <Paper>
           {friends.map((user) => {
-            console.log(user.username);
             return (
               <Grid key={user._id}>
                 <FriendCard username={user.username} userKey={user._id} />

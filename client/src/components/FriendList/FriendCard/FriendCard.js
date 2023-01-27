@@ -3,11 +3,12 @@ import { Typography, Card, CardContent } from "@mui/material";
 import RemoveFriendButton from "./RemoveFriendButton";
 
 const FriendCard = (props) => {
+  console.log(props);
   return (
     <Card>
       <CardContent>
         <Typography>{props.username}</Typography>
-        <RemoveFriendButton friendId={props._id} />
+        <RemoveFriendButton friendId={props.userKey} />
       </CardContent>
     </Card>
   );
