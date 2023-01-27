@@ -8,15 +8,15 @@ import { ADD_LIKE, REMOVE_LIKE } from "../../utils/mutations";
 import { QUERY_POST } from "../../utils/queries";
 
 const LikeButton = ({ postId }) => {
-  // query posts to find number of likes after clicks
-  const [getLikes, { loading, error, data }] = useLazyQuery(QUERY_POST);
+  // // query posts to find number of likes after clicks
+  // const [getLikes, { loading, error, data }] = useLazyQuery(QUERY_POST);
 
   const [addLike, { error2 }] = useMutation(ADD_LIKE);
   const [removeLike, { error3 }] = useMutation(REMOVE_LIKE);
 
-  let postData = data?.post || [];
+  // let postData = data?.post || [];
 
-  console.log(postData);
+  // console.log(postData);
 
   // use variable to toggle if post was liked
   // by default, post is unliked
@@ -28,10 +28,10 @@ const LikeButton = ({ postId }) => {
       // add like to post doc
       const { data } = await addLike({ variables: { postId: postId } });
 
-      // requery to update number on post
-      const { data2 } = await getLikes({
-        variables: { postId: postId },
-      });
+      // // requery to update number on post
+      // const { data2 } = await getLikes({
+      //   variables: { postId: postId },
+      // });
 
       // toggle liked to true
       setLiked(true);
@@ -41,11 +41,11 @@ const LikeButton = ({ postId }) => {
       // remove like from post doc
       const { data } = await removeLike({ variables: { postId: postId } });
 
-      // requery to update number on post
-      const { data2 } = await getLikes({
-        variables: { postId: postId },
-      });
-      console.log(data2);
+      // // requery to update number on post
+      // const { data2 } = await getLikes({
+      //   variables: { postId: postId },
+      // });
+      // console.log(data2);
 
       // toggle liked to false
       setLiked(false);
@@ -55,7 +55,7 @@ const LikeButton = ({ postId }) => {
   return (
     <div>
       <IconButton aria-label="like" onClick={handleClick}>
-        <Typography>{postData.likes || 420}</Typography>
+        {/* <Typography>{postData.likes || 420}</Typography> */}
         {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
       </IconButton>
     </div>
