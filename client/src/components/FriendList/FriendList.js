@@ -1,12 +1,10 @@
-import { Typography, Paper, Box, Button, IconButton } from "@mui/material";
+import { Typography, Paper } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useQuery } from "@apollo/client";
 
 import FriendCard from "./FriendCard/FriendCard";
 
 import { QUERY_ME } from "../../utils/queries";
-import { REMOVE_FRIEND } from "../../utils/mutations";
-import { typography } from "@mui/system";
 
 const FriendList = () => {
   //  query me to grab friends
