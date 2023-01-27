@@ -53,12 +53,10 @@ const LikeButton = ({ postId }) => {
   };
 
   return (
-    <div>
-      <IconButton aria-label="like" onClick={handleClick}>
-        {/* <Typography>{postData.likes || 420}</Typography> */}
-        {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      </IconButton>
-    </div>
+    <IconButton aria-label="like" onClick={handleClick}>
+      {/* <Typography>{postData.likes || 420}</Typography> */}
+      {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+    </IconButton>
   );
 };
 
