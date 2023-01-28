@@ -1,11 +1,11 @@
-import { Typography, Modal, Box, Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
 import { useState } from "react";
 import { useMutation, useLazyQuery, useQuery } from "@apollo/client";
 import { ADD_LIKE, REMOVE_LIKE } from "../../utils/mutations";
-import { QUERY_POST } from "../../utils/queries";
+// import { QUERY_POST } from "../../utils/queries";
 
 const LikeButton = ({ postId }) => {
   // // query posts to find number of likes after clicks
@@ -53,12 +53,10 @@ const LikeButton = ({ postId }) => {
   };
 
   return (
-    <div>
-      <IconButton aria-label="like" onClick={handleClick}>
-        {/* <Typography>{postData.likes || 420}</Typography> */}
-        {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      </IconButton>
-    </div>
+    <IconButton aria-label="like" onClick={handleClick}>
+      {/* <Typography>{postData.likes || 420}</Typography> */}
+      {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+    </IconButton>
   );
 };
 
