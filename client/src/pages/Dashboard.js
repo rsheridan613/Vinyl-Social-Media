@@ -9,12 +9,7 @@ import FriendList from "../components/FriendList/FriendList";
 const Dashboard = () => {
   return (
     <Grid container>
-      <Grid xs={12}>
-        <Typography variant="h1" component="h1">
-          Dashboard
-        </Typography>
-      </Grid>
-      <Grid container ws={3}>
+      <Grid container xs={3}>
         <FriendList />
       </Grid>
       <Grid container xs={6}>
